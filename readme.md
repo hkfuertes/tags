@@ -6,7 +6,7 @@ If the app/service is enabled, any NFC card/tag read without any android-compati
 
 ### WIP
 **TODO**:
-- Test read card id and payload.
+- Test read card id and payload. (Done in Flutter)
   - If payload is not detected we act based upon CARDID
 - Test read wifi network and list available networks.
   - **Optional**: If set, we can do any of the actions based on the location (via wifi availability/connection)
@@ -14,10 +14,13 @@ If the app/service is enabled, any NFC card/tag read without any android-compati
   - Intent: `android.intent.action.VIEW`
   - Data: `https://www.home-assistant.io/tags/<tag_id>`
   - Package: `io.homeassistant.companion.android[.minimal]`
-- Do API call:
+- Do API call: (Done in Flutter)
   - API endpoint: `/api/events/tag_scanned`
   - Data: `{"tag_id":"<tag_id>"}`
   - Auth: `Bearer <PAT>`
   
 ### Tasker Profile
 I already have a [tasker profile](tasker-profile.xml) that does this.
+
+### Flutter App
+Reads the ID of a card and sends it to home assitant via API (PAT needed). Next Steps, auto send, react on app closed (bradcast receiver), intent mode...
