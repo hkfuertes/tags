@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
-import net.mfuertes.nfchatags.connectors.HomeAssitantConnector
+import net.mfuertes.nfchatags.connectors.Connectable
 
 
 class ReceiverActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class ReceiverActivity : AppCompatActivity() {
                 sharedPreferences.save(SharedPreference.LAST_TAG_ID, tag.id.toHex())
                 Gson().fromJson(
                     sharedPreferences.getValueString(SharedPreference.SELECTED_METHOD),
-                    HomeAssitantConnector::class.java
+                    Connectable::class.java
                 )?.sendTag(this, tag.id.toHex(), onFinish = { finish() })
             }
         }

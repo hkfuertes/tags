@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import net.mfuertes.nfchatags.connectors.HomeAssitantConnector
 import net.mfuertes.nfchatags.R
+import net.mfuertes.nfchatags.connectors.Connectable
 
 class HomeAssitantConnectorsAdapter(
     val context: Context,
-    val items: ArrayList<HomeAssitantConnector>,
-    var current: HomeAssitantConnector?,
+    val items: ArrayList<Connectable>,
+    var current: Connectable?,
     val onClickListener: View.OnClickListener?
 ) :
     RecyclerView.Adapter<HomeAssitantConnectorsAdapter.ViewHolder>() {
@@ -33,9 +33,8 @@ class HomeAssitantConnectorsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.get(position)
-        holder.text1.text = item.name
-        holder.text2.text =
-            if (item.packageName != null) item.packageName else if (item.ip != null) item.ip else item.description
+        holder.text1.text = item.getDisplayName()
+        holder.text2.text = item.getDescription()
         holder.check.apply {
             isChecked = current?.equals(item) ?: false
         }

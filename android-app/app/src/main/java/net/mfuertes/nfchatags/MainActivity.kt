@@ -8,9 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import net.mfuertes.nfchatags.SharedPreference.Companion.SELECTED_METHOD
+import net.mfuertes.nfchatags.SharedPreference.Companion.SELECTED_METHOD_TYPE
 import net.mfuertes.nfchatags.adapters.HomeAssitantConnectorsAdapter
-import net.mfuertes.nfchatags.connectors.HomeAssitantConnector
-import net.mfuertes.nfchatags.connectors.NothingConnector
+import net.mfuertes.nfchatags.connectors.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         "io.homeassistant.companion.android.minimal.debug"
     )
     private val methods : List<String> = listOf("API", "Intent")
-    private val connectors: ArrayList<HomeAssitantConnector> = ArrayList<HomeAssitantConnector>()
+    private val connectors: ArrayList<Connectable> = ArrayList<Connectable>()
     private lateinit var adapter: HomeAssitantConnectorsAdapter
 
 
@@ -31,41 +32,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         var sharedPreferences = SharedPreference(this)
+        var nothingOption = NothingConnector(sharedPreferences.getValueString(SharedPreference.LAST_TAG_ID));
 
         haPackages.forEach{
             if(isPackageInstalled(it, packageManager))
                 connectors.add(
-                    HomeAssitantConnector(
+                    HomeAssitantIntentConnector(
                         packageName=it,
                         name = "Home Assitant App"
                     )
                 )
         }
-        connectors.add(HomeAssitantConnector.connector)
-        connectors.add(NothingConnector().also { item ->
-            val tagid = sharedPreferences.getValueString(SharedPreference.LAST_TAG_ID)
-            item.description = tagid?.let { item.description.toString().replace("%tag_id%", it) };
-        })
+        connectors.add(HomeAssitantApiConnector.connector)
+        connectors.add(nothingOption)
+
         val list = findViewById<RecyclerView>(R.id.list_conectors)
-        var current = Gson().fromJson(
-            sharedPreferences.getValueString(SharedPreference.SELECTED_METHOD),
-            HomeAssitantConnector::class.java
-        )
+        var current = Connectable.getSavedConnector(sharedPreferences)
         adapter = HomeAssitantConnectorsAdapter(this, connectors, current, View.OnClickListener{
-            val itemPosition: Int = list.getChildLayoutPosition(it)
-            val item: HomeAssitantConnector = connectors.get(itemPosition)
-            sharedPreferences.save(SharedPreference.SELECTED_METHOD, Gson().toJson(item))
+            val item: Connectable = connectors.get(list.getChildLayoutPosition(it))
+            Connectable.saveConnector(sharedPreferences, item)
             adapter.current = item
-            //list.adapter = adapter
             adapter.notifyDataSetChanged()
-            findViewById<Button>(R.id.edit_connector).apply { isEnabled = (item.packageName == null && item.description == null) }
+            findViewById<Button>(R.id.edit_connector).apply { isEnabled = item.isEditable() }
         })
 
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
-
-        //Close the activity
-        findViewById<Button>(R.id.close).setOnClickListener { finish() }
 
     }
 
@@ -76,14 +68,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
-    }
-
-    private fun getInstalledAppPackage(): String?{
-        haPackages.forEach{
-            if(isPackageInstalled(it, packageManager))
-                return it;
-        }
-        return null
     }
 
 }

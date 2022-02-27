@@ -51,6 +51,7 @@ class SharedPreference(val context: Context) {
     }
 
     companion object {
+        const val SELECTED_METHOD_TYPE = "selected_method_type"
         const val SELECTED_METHOD = "selected_method"
         const val LAST_TAG_ID = "last_tag_id"
     }

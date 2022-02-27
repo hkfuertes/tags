@@ -1,23 +1,28 @@
 package net.mfuertes.nfchatags.connectors
 
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
-
+import java.lang.reflect.Type
+import kotlin.reflect.typeOf
 
 open class HomeAssitantApiConnector(
     var ip: String,
     var port: Int,
     var pat: String,
-    var name: String): Conectable {
+    var name: String): Connectable {
     companion object{
+         fun fromJson(json: String): HomeAssitantApiConnector {
+            return Gson().fromJson(json, HomeAssitantApiConnector::class.java)
+        }
+        fun toJson(connector: HomeAssitantApiConnector): String {
+            return Gson().toJson(connector)
+        }
+
         var connector = HomeAssitantApiConnector(
             ip = "10.9.8.254",
             port = 8123,
@@ -34,6 +39,10 @@ open class HomeAssitantApiConnector(
         return name
     }
 
+    override fun getDescription(): String {
+        return ip
+    }
+
     override fun isEditable(): Boolean {
         return true;
     }
@@ -45,33 +54,14 @@ open class HomeAssitantApiConnector(
     private val endpoint = "/api/events/tag_scanned";
 
     override fun sendTag(context: Context, tagId: String, onFinish: () -> Unit){
-        //We prefer the package name, intent method.
-        if (packageName == null){
-            postTag(context, tagId, onFinish)
-        }else{
-            openIntent(context, tagId, onFinish)
-        }
+        postTag(context, tagId, onFinish)
     }
 
-    private fun openIntent(context: Context, tagId: String, onFinished: () -> Unit){
-        val newIntent = Intent(Intent.ACTION_VIEW)
-        newIntent.setPackage(packageName)
-        newIntent.data = Uri.parse("https://www.home-assistant.io/tag/$tagId")
-        newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        try {
-            context.startActivity(newIntent)
-            onFinished()
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, "No HomeAssitant app detected on device.", Toast.LENGTH_LONG).show()
-        }
-
-    }
-
-    private fun _getUrl(): String{
-        return "http://"+ip+":"+port.toString()+endpoint
+    private fun getUrl(): String{
+        return "http://$ip:$port$endpoint"
     }
     private fun postTag(context: Context, tagId: String, onFinished: () -> Unit) {
-        val url = _getUrl()
+        val url = getUrl()
         val jsonBody = JSONObject("{\"tag_id\": \"$tagId\"}")
 
         val jsonRequest: JsonObjectRequest = object : JsonObjectRequest(
