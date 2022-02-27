@@ -3,6 +3,7 @@ package net.mfuertes.nfchatags
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,14 +32,14 @@ class MainActivity : AppCompatActivity() {
 
         var sharedPreferences = SharedPreference(this)
 
-        val installedPackage = getInstalledAppPackage();
-        if (installedPackage != null){
-            connectors.add(
-                HomeAssitantConnector(
-                packageName=installedPackage,
-                name = "Home Assitant App"
-            )
-            )
+        haPackages.forEach{
+            if(isPackageInstalled(it, packageManager))
+                connectors.add(
+                    HomeAssitantConnector(
+                        packageName=it,
+                        name = "Home Assitant App"
+                    )
+                )
         }
         connectors.add(HomeAssitantConnector.connector)
         connectors.add(NothingConnector().also { item ->
@@ -57,10 +58,15 @@ class MainActivity : AppCompatActivity() {
             adapter.current = item
             //list.adapter = adapter
             adapter.notifyDataSetChanged()
+            findViewById<Button>(R.id.edit_connector).apply { isEnabled = (item.packageName == null && item.description == null) }
         })
 
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
+
+        //Close the activity
+        findViewById<Button>(R.id.close).setOnClickListener { finish() }
+
     }
 
     private fun isPackageInstalled(packageName: String, packageManager: PackageManager): Boolean {
