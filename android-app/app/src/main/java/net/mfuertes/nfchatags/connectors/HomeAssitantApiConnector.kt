@@ -12,31 +12,39 @@ import com.google.gson.Gson
 import org.json.JSONObject
 
 
-open class HomeAssitantConnector(
-    var ip: String? = null,
-    var port: Int? = null,
-    var pat: String? = null,
-    var packageName: String? = null,
-    var description: String? = null,
-    var name: String) {
+open class HomeAssitantApiConnector(
+    var ip: String,
+    var port: Int,
+    var pat: String,
+    var name: String): Conectable {
     companion object{
-        var connector = HomeAssitantConnector(
+        var connector = HomeAssitantApiConnector(
             ip = "10.9.8.254",
             port = 8123,
             pat = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI4M2IxNzNlODEzZGI0ZjY2OGYyOTcxODU2ZDRhMDdjZSIsImlhdCI6MTY0NTg5Mzc4NywiZXhwIjoxOTYxMjUzNzg3fQ.5qX_8cV4JhMInLeAsebQhUJh9wrbV_fZbbUiEz82McU",
-            packageName = null,
             name = "Madrid"
         )
     }
 
-    override operator fun equals(other: Any?): Boolean{
-        val gson = Gson()
-        return gson.toJson(other).equals(gson.toJson(this))
+    override fun getId(): String {
+        return ip
+    }
+
+    override fun getDisplayName(): String {
+        return name
+    }
+
+    override fun isEditable(): Boolean {
+        return true;
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return (other is HomeAssitantApiConnector) && getId() == other.getId()
     }
 
     private val endpoint = "/api/events/tag_scanned";
 
-    open fun sendTag(context: Context, tagId: String, onFinish: () -> Unit){
+    override fun sendTag(context: Context, tagId: String, onFinish: () -> Unit){
         //We prefer the package name, intent method.
         if (packageName == null){
             postTag(context, tagId, onFinish)
