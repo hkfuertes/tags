@@ -1,7 +1,6 @@
-package net.mfuertes.nfchatags
+package net.mfuertes.nfchatags.connectors
 
 import android.content.ActivityNotFoundException
-import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.net.Uri

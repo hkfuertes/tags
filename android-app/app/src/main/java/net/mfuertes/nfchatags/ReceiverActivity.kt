@@ -9,6 +9,8 @@ import android.os.Parcelable
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
+import net.mfuertes.nfchatags.connectors.HomeAssitantConnector
 
 
 class ReceiverActivity : AppCompatActivity() {
@@ -34,7 +36,6 @@ class ReceiverActivity : AppCompatActivity() {
         super.onNewIntent(intent);
         setIntent(intent);
     }
-
     override fun onResume() {
         super.onResume()
         if (intent != null) {
@@ -42,14 +43,12 @@ class ReceiverActivity : AppCompatActivity() {
             if (NfcAdapter.ACTION_TAG_DISCOVERED == action || NfcAdapter.ACTION_TECH_DISCOVERED == action || NfcAdapter.ACTION_NDEF_DISCOVERED == action) {
                 val tag = (intent.getParcelableExtra<Parcelable>(NfcAdapter.EXTRA_TAG) as Tag?)!!
                 _scannedTagId.text = tag.id.toHex().uppercase()
-                getInstalledAppPackage().also { item ->
-                    if (item != null){
-                        HomeAssitantConnector.connector.packageName = item
-                    }
-                    HomeAssitantConnector.connector.sendTag(this, tag.id.toHex().uppercase(),
-                        onFinish = { finish() })
-                }
-
+                var sharedPreferences = SharedPreference(this)
+                sharedPreferences.save(SharedPreference.LAST_TAG_ID, tag.id.toHex())
+                Gson().fromJson(
+                    sharedPreferences.getValueString(SharedPreference.SELECTED_METHOD),
+                    HomeAssitantConnector::class.java
+                )?.sendTag(this, tag.id.toHex(), onFinish = { finish() })
             }
         }
     }
