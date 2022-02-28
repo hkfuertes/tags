@@ -4,28 +4,24 @@ import android.content.Context
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
-import java.lang.reflect.Type
-import kotlin.reflect.typeOf
 
-open class HomeAssitantApiConnector(
+open class HomeAssistantApiConnector(
     var ip: String,
     var port: Int,
     var pat: String,
     var name: String): Connectable {
     companion object{
-         fun fromData(data: String): HomeAssitantApiConnector {
+         fun fromData(data: String): HomeAssistantApiConnector {
             val parts = data.split("\n")
-             return HomeAssitantApiConnector(
+             return HomeAssistantApiConnector(
                  name = parts[0].replace("[","").replace("]",""),
                  ip = parts[1].split("=")[1],
                  port = parts[2].split("=")[1].toInt(),
                  pat = parts[3].split("=")[1]
              );
         }
-        fun toData(connector: HomeAssitantApiConnector): String {
+        fun toData(connector: HomeAssistantApiConnector): String {
             return """
                 [${connector.name}]
                 ip=${connector.ip}
@@ -34,7 +30,7 @@ open class HomeAssitantApiConnector(
             """.trimIndent()
         }
 
-        var connector = HomeAssitantApiConnector(
+        var connector = HomeAssistantApiConnector(
             ip = "10.9.8.254",
             port = 8123,
             pat = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI4M2IxNzNlODEzZGI0ZjY2OGYyOTcxODU2ZDRhMDdjZSIsImlhdCI6MTY0NTg5Mzc4NywiZXhwIjoxOTYxMjUzNzg3fQ.5qX_8cV4JhMInLeAsebQhUJh9wrbV_fZbbUiEz82McU",
@@ -59,7 +55,7 @@ open class HomeAssitantApiConnector(
     }
 
     override fun equals(other: Any?): Boolean {
-        return (other is HomeAssitantApiConnector) && getId() == other.getId()
+        return (other is HomeAssistantApiConnector) && getId() == other.getId()
     }
 
     private val endpoint = "/api/events/tag_scanned";

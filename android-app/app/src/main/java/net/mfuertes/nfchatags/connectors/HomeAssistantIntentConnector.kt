@@ -8,9 +8,9 @@ import android.widget.Toast
 import com.google.gson.Gson
 
 
-open class HomeAssitantIntentConnector(
+open class HomeAssistantIntentConnector(
     var packageName: String,
-    var name: String = "Home Assitant App"
+    var name: String = "Home Assistant App"
 ) : Connectable {
 
     override fun getId(): String {
@@ -26,7 +26,7 @@ open class HomeAssitantIntentConnector(
     }
 
     override fun isEditable(): Boolean {
-        return true;
+        return false;
     }
 
     override fun equals(other: Any?): Boolean {

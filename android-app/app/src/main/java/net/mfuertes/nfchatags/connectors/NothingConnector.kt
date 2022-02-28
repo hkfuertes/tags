@@ -2,9 +2,9 @@ package net.mfuertes.nfchatags.connectors
 
 import android.content.Context
 
-class NothingConnector(var lastTagId: String? = "unknown"): Connectable {
+class NothingConnector(): Connectable {
     override fun getDescription(): String{
-        return "Last tag: $lastTagId"
+        return "Use this option to see the tag's id."
     }
     override fun getId(): String {
         return "nothing"
