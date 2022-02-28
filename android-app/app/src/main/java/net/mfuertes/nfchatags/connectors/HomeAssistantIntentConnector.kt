@@ -10,7 +10,7 @@ import com.google.gson.Gson
 
 open class HomeAssitantIntentConnector(
     var packageName: String,
-    var name: String
+    var name: String = "Home Assitant App"
 ) : Connectable {
 
     override fun getId(): String {

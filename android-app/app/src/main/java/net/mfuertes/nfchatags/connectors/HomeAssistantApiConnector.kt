@@ -16,11 +16,22 @@ open class HomeAssitantApiConnector(
     var pat: String,
     var name: String): Connectable {
     companion object{
-         fun fromJson(json: String): HomeAssitantApiConnector {
-            return Gson().fromJson(json, HomeAssitantApiConnector::class.java)
+         fun fromData(data: String): HomeAssitantApiConnector {
+            val parts = data.split("\n")
+             return HomeAssitantApiConnector(
+                 name = parts[0].replace("[","").replace("]",""),
+                 ip = parts[1].split("=")[1],
+                 port = parts[2].split("=")[1].toInt(),
+                 pat = parts[3].split("=")[1]
+             );
         }
-        fun toJson(connector: HomeAssitantApiConnector): String {
-            return Gson().toJson(connector)
+        fun toData(connector: HomeAssitantApiConnector): String {
+            return """
+                [${connector.name}]
+                ip=${connector.ip}
+                port=${connector.port}
+                pat=${connector.pat}
+            """.trimIndent()
         }
 
         var connector = HomeAssitantApiConnector(
