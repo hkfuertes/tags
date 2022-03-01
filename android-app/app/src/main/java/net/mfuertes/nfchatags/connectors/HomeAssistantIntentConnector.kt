@@ -9,16 +9,15 @@ import com.google.gson.Gson
 
 
 open class HomeAssistantIntentConnector(
-    var packageName: String,
-    var name: String = "Home Assistant App"
+    var packageName: String
 ) : Connectable {
 
-    override fun getId(): String {
+    override fun getUniqueId(): String {
         return packageName
     }
 
     override fun getDisplayName(): String {
-        return name
+        return if(packageName.contains("minimal")) "Home Assistant Minimal App" else "Home Assistant App"
     }
 
     override fun getDescription(): String {
@@ -30,7 +29,7 @@ open class HomeAssistantIntentConnector(
     }
 
     override fun equals(other: Any?): Boolean {
-        return (other is Connectable) && getId() == other.getId()
+        return (other is Connectable) && getUniqueId() == other.getUniqueId()
     }
 
     override fun sendTag(context: Context, tagId: String, onFinish: () -> Unit) {

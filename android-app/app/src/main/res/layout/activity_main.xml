@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:layout_margin="8dp"
+            android:enabled="false"
             android:text="Edit" />
 
         <Button

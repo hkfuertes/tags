@@ -9,6 +9,7 @@ import android.os.Parcelable
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import net.mfuertes.nfchatags.connectors.ApiConnectorDbHelper
 import net.mfuertes.nfchatags.connectors.Connectable
 
 
@@ -36,7 +37,7 @@ class ReceiverActivity : AppCompatActivity() {
                 val tag = (intent.getParcelableExtra<Parcelable>(NfcAdapter.EXTRA_TAG) as Tag?)!!
                 _scannedTagId.text = tag.id.toHex()
                 var sharedPreferences = SharedPreference(this)
-                Connectable.getSavedConnector(sharedPreferences)
+                Connectable.getSavedConnector(sharedPreferences, dbHelper = ApiConnectorDbHelper(this))
                     ?.sendTag(this, tag.id.toHex(), onFinish = { finish() })
             }
         }

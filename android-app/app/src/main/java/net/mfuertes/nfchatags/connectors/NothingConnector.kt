@@ -6,7 +6,7 @@ class NothingConnector(): Connectable {
     override fun getDescription(): String{
         return "Use this option to see the tag's id."
     }
-    override fun getId(): String {
+    override fun getUniqueId(): String {
         return "nothing"
     }
 

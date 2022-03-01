@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,9 @@ class MainActivity : AppCompatActivity() {
     )
     private val connectors: ArrayList<Connectable> = ArrayList<Connectable>()
     private lateinit var adapter: HomeAssitantConnectorsAdapter
+    private val nothingOption = NothingConnector();
 
+    internal val dbHelper = ApiConnectorDbHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,28 +34,20 @@ class MainActivity : AppCompatActivity() {
         editButton = findViewById<Button>(R.id.edit_connector)
 
         var sharedPreferences = SharedPreference(this)
-        var nothingOption = NothingConnector();
 
-        haPackages.forEach{
-            if(isPackageInstalled(it, packageManager))
-                connectors.add(
-                    HomeAssistantIntentConnector(
-                        packageName=it
-                    )
-                )
-        }
-        connectors.add(HomeAssistantApiConnector.connector)
-        connectors.add(nothingOption)
+        //TODO: DELETE THIS PART
+        //dbHelper.upsertConnector(HomeAssistantApiConnector.connector);
+
 
         val list = findViewById<RecyclerView>(R.id.list_conectors)
-        var current = Connectable.getSavedConnector(sharedPreferences)
-        editButtonHandler(editButton,current)
-        adapter = HomeAssitantConnectorsAdapter(this, connectors, current, View.OnClickListener{
+        var current = Connectable.getSavedConnector(sharedPreferences, dbHelper)
+        editButtonHandler(editButton, current)
+        adapter = HomeAssitantConnectorsAdapter(this, connectors, current, View.OnClickListener {
             val item: Connectable = connectors.get(list.getChildLayoutPosition(it))
             Connectable.saveConnector(sharedPreferences, item)
             adapter.current = item
             adapter.notifyDataSetChanged()
-            editButtonHandler(editButton,item)
+            editButtonHandler(editButton, item)
         })
 
         list.layoutManager = LinearLayoutManager(this)
@@ -66,15 +59,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun editButtonHandler(button: Button?,connector: Connectable?){
-        if (button!=null && connector != null){
+    private fun fillList() {
+        connectors.clear()
+        haPackages.forEach {
+            if (isPackageInstalled(it, packageManager))
+                connectors.add(
+                    HomeAssistantIntentConnector(
+                        packageName = it
+                    )
+                )
+        }
+        dbHelper.getConnectors().forEach {
+            connectors.add(it)
+        }
+
+        //connectors.add(HomeAssistantApiConnector.connector)
+        connectors.add(nothingOption)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fillList()
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun editButtonHandler(button: Button?, connector: Connectable?) {
+        if (button != null && connector != null) {
             button.apply {
                 isEnabled = connector.isEditable()
             }
             button.setOnClickListener {
                 //Toast.makeText(this,connector.getDisplayName()+" | "+connector.getId(), Toast.LENGTH_LONG).show()
                 val intent = Intent(this, EditConnector::class.java)
-                intent.putExtra(EditConnector.CONNECTOR_TO_EDIT, HomeAssistantApiConnector.toData(connector as HomeAssistantApiConnector))
+                intent.putExtra(
+                    EditConnector.CONNECTOR_TO_EDIT,
+                    (connector as HomeAssistantApiConnector).id
+                )
                 startActivity(intent)
             }
         }

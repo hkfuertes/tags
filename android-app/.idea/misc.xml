@@ -4,7 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../Android/Sdk/platforms/android-32/data/res/layout/two_line_list_item.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout/activity_edit_connector.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_edit_connector.xml" value="0.25380710659898476" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_receiver.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/connector_item.xml" value="0.67" />

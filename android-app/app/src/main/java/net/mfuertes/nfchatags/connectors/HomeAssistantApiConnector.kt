@@ -7,6 +7,7 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
 open class HomeAssistantApiConnector(
+    var id: Int? = null,
     var ip: String,
     var port: Int,
     var pat: String,
@@ -38,8 +39,8 @@ open class HomeAssistantApiConnector(
         )
     }
 
-    override fun getId(): String {
-        return ip
+     override fun getUniqueId(): String {
+        return if(id == null) ip else id.toString()
     }
 
     override fun getDisplayName(): String {
@@ -55,7 +56,7 @@ open class HomeAssistantApiConnector(
     }
 
     override fun equals(other: Any?): Boolean {
-        return (other is HomeAssistantApiConnector) && getId() == other.getId()
+        return (other is HomeAssistantApiConnector) && getUniqueId() == other.getUniqueId()
     }
 
     private val endpoint = "/api/events/tag_scanned";

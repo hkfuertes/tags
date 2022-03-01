@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".EditConnector">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/name_copy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:text="Name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -27,9 +22,11 @@
                 android:id="@+id/name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:minHeight="48dp"
+                android:hint="Home"
                 app:layout_constraintTop_toBottomOf="@+id/name_copy"
-                tools:layout_editor_absoluteX="5dp" />
+                tools:layout_editor_absoluteX="5dp"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/ip_copy"
@@ -43,9 +40,11 @@
                 android:id="@+id/ip_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="http://10.9.8.7"
+                android:hint="10.9.8.7"
+                android:minHeight="48dp"
                 app:layout_constraintTop_toBottomOf="@+id/ip_copy"
-                tools:layout_editor_absoluteX="5dp" />
+                tools:layout_editor_absoluteX="5dp"
+                android:inputType="text"/>
 
             <TextView
                 android:id="@+id/port_copy"
@@ -60,8 +59,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="8123"
+                android:minHeight="48dp"
                 app:layout_constraintTop_toBottomOf="@+id/port_copy"
-                tools:layout_editor_absoluteX="5dp" />
+                tools:layout_editor_absoluteX="5dp"
+                android:inputType="number"/>
 
             <TextView
                 android:id="@+id/pat_copy"
@@ -78,22 +79,40 @@
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:hint="ey...."
-                android:lines="10"
                 android:singleLine="false"
                 app:layout_constraintTop_toBottomOf="@+id/pat_copy"
-                tools:layout_editor_absoluteX="16dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                tools:layout_editor_absoluteX="16dp"
+                android:inputType="textMultiLine"/>
 
-    </ScrollView>
+            <LinearLayout
+                android:id="@+id/bottom_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:weightSum="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
+                <Button
+                    android:id="@+id/edit_connector_remove"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="50"
+                    android:text="Remove"
+                    android:enabled="false"
+                    android:textColor="#212121" />
 
-    <Button
-        android:id="@+id/edit_connector_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/edit_connector_save"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="50"
+                    android:text="Save" />
+
+            </LinearLayout>
+        </LinearLayout>
+</ScrollView>
