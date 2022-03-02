@@ -2,9 +2,9 @@
 Simple proxy app to trigger Home Assistant tag by reusing nfc cards/tags (i.e. Metro card).
 
 ## Usage
-If the app/service is enabled, any NFC card/tag read without any android-compatible payload, will be read, and the app will send a signal with the card ID to Home Assistant, via Intent or via API.
+Any NFC card/tag read without any android-compatible payload, will be read, and the app will send a signal with the card ID to Home Assistant, via Intent or via API.
 
-On the main Screen select create or edit a connector, and thats it. If the app detects any [Home Assitant Companion App](https://companion.home-assistant.io) it automagically will show as a posible connector.
+On the main Screen select, create or edit a connector, and thats it. If the app detects any [Home Assitant Companion App](https://companion.home-assistant.io) it automagically will show as a posible connector.
 
 Use the "Nothing" connector to see the card's id to create the counterpart in Home Assitant acordingly. As the name suggest, it will trigger nothing.
 
