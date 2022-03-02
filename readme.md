@@ -11,7 +11,7 @@ Use the "Nothing" connector to see the card's id to create the counterpart in Ho
 > Any Home Assitant App connector will use the Intent method, any other Connector will trigger the Home Assitant api and thus will require a Personal Access Token ([Long-lived access token](https://developers.home-assistant.io/docs/auth_api/#long-lived-access-token))
 
 ## Download
-Head to [releases](https://github.com/hkfuertes/nfc_ha_tags/releases) to grab the lates APK.
+Head to [releases](https://github.com/hkfuertes/nfc_ha_tags/releases) to grab the latest APK.
 
 
 ## Screenshots
