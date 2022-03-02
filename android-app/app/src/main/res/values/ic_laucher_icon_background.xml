@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Tags</string>
+    <color name="ic_laucher_icon_background">#4A596E</color>
 </resources>

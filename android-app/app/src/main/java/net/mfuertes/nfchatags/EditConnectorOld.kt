@@ -3,20 +3,18 @@ package net.mfuertes.nfchatags
 import android.os.Bundle
 import android.text.Editable
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import net.mfuertes.nfchatags.connectors.ApiConnectorDbHelper
-import net.mfuertes.nfchatags.connectors.HomeAssistantApiConnector
+import net.mfuertes.nfchatags.connectors.ApiConnector
 
 class EditConnector : AppCompatActivity() {
     companion object {
         const val CONNECTOR_TO_EDIT = "CONNECTOR_TO_EDIT"
     }
 
-    var connector: HomeAssistantApiConnector? = null
+    var connector: ApiConnector? = null
     lateinit var ip: EditText
     lateinit var port: EditText
     lateinit var pat: EditText
@@ -61,7 +59,7 @@ class EditConnector : AppCompatActivity() {
                 port.text.isNotBlank() &&
                 pat.text.isNotBlank()
             ) {
-                val nconnector = HomeAssistantApiConnector(
+                val nconnector = ApiConnector(
                     ip = ip.text.toString(),
                     name = name.text.toString(),
                     port = port.text.toString().toInt(),
