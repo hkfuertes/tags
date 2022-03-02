@@ -4,13 +4,25 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../Android/Sdk/platforms/android-32/data/res/layout/two_line_list_item.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1905" />
+        <entry key="app/src/main/res/drawable/home_assistant_logo.xml" value="0.1905" />
+        <entry key="app/src/main/res/drawable/ic_baseline_nfc_24.xml" value="0.24" />
+        <entry key="app/src/main/res/drawable/ic_ethernet_white.xml" value="0.1905" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1905" />
+        <entry key="app/src/main/res/drawable/ic_launcher_nfc_foreground.xml" value="0.1905" />
+        <entry key="app/src/main/res/drawable/ic_nfc_launcher_white.xml" value="0.1905" />
+        <entry key="app/src/main/res/drawable/ic_nfc_white.xml" value="0.1905" />
         <entry key="app/src/main/res/layout/activity_edit_connector.xml" value="0.25380710659898476" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_receiver.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/connector_item.xml" value="0.67" />
         <entry key="app/src/main/res/layout/package_item.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/settings_activity.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2035" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1905" />
+        <entry key="app/src/main/res/xml/root_edit_connector.xml" value="0.26145833333333335" />
+        <entry key="app/src/main/res/xml/root_preferences.xml" value="0.23385416666666667" />
       </map>
     </option>
   </component>

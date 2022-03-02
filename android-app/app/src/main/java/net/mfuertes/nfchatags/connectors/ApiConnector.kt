@@ -6,23 +6,23 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
-open class HomeAssistantApiConnector(
+open class ApiConnector(
     var id: Int? = null,
     var ip: String,
     var port: Int,
     var pat: String,
     var name: String): Connectable {
     companion object{
-         fun fromData(data: String): HomeAssistantApiConnector {
+         fun fromData(data: String): ApiConnector {
             val parts = data.split("\n")
-             return HomeAssistantApiConnector(
+             return ApiConnector(
                  name = parts[0].replace("[","").replace("]",""),
                  ip = parts[1].split("=")[1],
                  port = parts[2].split("=")[1].toInt(),
                  pat = parts[3].split("=")[1]
              );
         }
-        fun toData(connector: HomeAssistantApiConnector): String {
+        fun toData(connector: ApiConnector): String {
             return """
                 [${connector.name}]
                 ip=${connector.ip}
@@ -31,7 +31,7 @@ open class HomeAssistantApiConnector(
             """.trimIndent()
         }
 
-        var connector = HomeAssistantApiConnector(
+        var connector = ApiConnector(
             ip = "10.9.8.254",
             port = 8123,
             pat = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI4M2IxNzNlODEzZGI0ZjY2OGYyOTcxODU2ZDRhMDdjZSIsImlhdCI6MTY0NTg5Mzc4NywiZXhwIjoxOTYxMjUzNzg3fQ.5qX_8cV4JhMInLeAsebQhUJh9wrbV_fZbbUiEz82McU",
@@ -40,7 +40,8 @@ open class HomeAssistantApiConnector(
     }
 
      override fun getUniqueId(): String {
-        return if(id == null) ip else id.toString()
+         val id = if(id == null) ip else id.toString()
+         return Connectable.TYPES[0]+"|"+id
     }
 
     override fun getDisplayName(): String {
@@ -56,7 +57,7 @@ open class HomeAssistantApiConnector(
     }
 
     override fun equals(other: Any?): Boolean {
-        return (other is HomeAssistantApiConnector) && getUniqueId() == other.getUniqueId()
+        return (other is ApiConnector) && getUniqueId() == other.getUniqueId()
     }
 
     private val endpoint = "/api/events/tag_scanned";

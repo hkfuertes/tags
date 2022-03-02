@@ -1,34 +1,35 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
-
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="Connectors">
 
         <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
+            android:icon="@drawable/ic_ethernet_white"
+            app:key="method"
+            app:title="Connector to be used"
             app:useSimpleSummaryProvider="true" />
+        <Preference
+            android:enabled="false"
+            android:icon="@drawable/ic_edit_white"
+            app:key="edit"
+            app:summary="Edits current Connector"
+            app:title="Edit Connector" />
+        <Preference
+            android:icon="@drawable/ic_add_white"
+            app:key="create"
+            app:summary="Creates a new Connector"
+            app:title="Add Connector" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="Settings">
 
         <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+            android:enabled="false"
+            android:icon="@drawable/ic_nfc_white"
+            app:key="use_tag_data"
+            app:summary="If HA Tag detected, use id from payload instead."
+            app:title="Use HA data" />
 
     </PreferenceCategory>
 

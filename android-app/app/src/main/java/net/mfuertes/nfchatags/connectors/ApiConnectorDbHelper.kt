@@ -25,7 +25,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
     }
 
-    private fun addConnector(connector: HomeAssistantApiConnector): Long{
+    private fun addConnector(connector: ApiConnector): Long{
         val values = contentValuesOf(
             Pair("ip",connector.ip),
             Pair("name", connector.name),
@@ -37,7 +37,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
         db.close()
         return response
     }
-    private fun updateConnector(connector: HomeAssistantApiConnector): Int{
+    private fun updateConnector(connector: ApiConnector): Int{
         val values = contentValuesOf(
             Pair("ip",connector.ip),
             Pair("name", connector.name),
@@ -49,7 +49,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
         db.close()
         return response
     }
-    fun upsertConnector(connector: HomeAssistantApiConnector): Long {
+    fun upsertConnector(connector: ApiConnector): Long {
         return if (connector.id != null){
             updateConnector(connector).toLong()
         }else{
@@ -57,14 +57,14 @@ SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
         }
     }
     @SuppressLint("Range")
-    fun getConnectors(): ArrayList<HomeAssistantApiConnector>{
-        var connectors = ArrayList<HomeAssistantApiConnector>()
+    fun getConnectors(): ArrayList<ApiConnector>{
+        var connectors = ArrayList<ApiConnector>()
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
         if(cursor.count > 0){
             cursor!!.moveToFirst()
             connectors.add(
-                HomeAssistantApiConnector(
+                ApiConnector(
                     ip = cursor.getString(cursor.getColumnIndex("ip")),
                     name = cursor.getString(cursor.getColumnIndex("name")),
                     pat = cursor.getString(cursor.getColumnIndex("pat")),
@@ -74,7 +74,7 @@ SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
             )
             while (cursor.moveToNext()){
                 connectors.add(
-                    HomeAssistantApiConnector(
+                    ApiConnector(
                         ip = cursor.getString(cursor.getColumnIndex("ip")),
                         name = cursor.getString(cursor.getColumnIndex("name")),
                         pat = cursor.getString(cursor.getColumnIndex("pat")),
@@ -88,12 +88,12 @@ SQLiteOpenHelper(context, DATABASE_NAME, null, 1){
     }
 
     @SuppressLint("Range")
-    fun getConnectorById(id: Int): HomeAssistantApiConnector?{
+    fun getConnectorById(id: Int): ApiConnector?{
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE id = '$id'", null)
         if(cursor.count > 0){
             cursor!!.moveToFirst()
-            return HomeAssistantApiConnector(
+            return ApiConnector(
                 ip = cursor.getString(cursor.getColumnIndex("ip")),
                 name = cursor.getString(cursor.getColumnIndex("name")),
                 pat = cursor.getString(cursor.getColumnIndex("pat")),

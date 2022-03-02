@@ -7,7 +7,7 @@ class NothingConnector(): Connectable {
         return "Use this option to see the tag's id."
     }
     override fun getUniqueId(): String {
-        return "nothing"
+        return Connectable.TYPES[2] +"|nothing"
     }
 
     override fun getDisplayName(): String {

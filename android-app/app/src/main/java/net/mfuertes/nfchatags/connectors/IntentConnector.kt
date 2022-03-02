@@ -8,12 +8,12 @@ import android.widget.Toast
 import com.google.gson.Gson
 
 
-open class HomeAssistantIntentConnector(
+open class IntentConnector(
     var packageName: String
 ) : Connectable {
 
     override fun getUniqueId(): String {
-        return packageName
+        return Connectable.TYPES[1] + "|" +packageName
     }
 
     override fun getDisplayName(): String {

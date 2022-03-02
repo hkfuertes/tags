@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import net.mfuertes.nfchatags.connectors.ApiConnectorDbHelper
 import net.mfuertes.nfchatags.connectors.ApiConnector
 
-class EditConnector : AppCompatActivity() {
+class EditConnectorOld : AppCompatActivity() {
     companion object {
         const val CONNECTOR_TO_EDIT = "CONNECTOR_TO_EDIT"
     }
