@@ -13,6 +13,8 @@ Use the "Nothing" connector to see the card's id to create the counterpart in Ho
 ## Download
 Head to [releases](https://github.com/hkfuertes/nfc_ha_tags/releases) to grab the latest APK.
 
+## Pro Tip
+Use this app with Magisk module [NfcScreenOff](https://github.com/Magisk-Modules-Repo/NFCScreenOff) to convert an spare Nfc enabled phone into an RFID reader for Home Assitant.
 
 ## Screenshots
 ![HomeScreen](images/home_screen.jpg)
