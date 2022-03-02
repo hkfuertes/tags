@@ -21,6 +21,7 @@ Head to [releases](https://github.com/hkfuertes/nfc_ha_tags/releases) to grab th
 ![tagScanned](images/tag_scanned.jpg)
 
 ## TODO:
+- Tweak "Tag Scanned" Screen
 - If card has HA payload, use the that id instead
 - Tasker integration
 - Test read wifi network and list available networks.
