@@ -25,6 +25,5 @@ Use this app with Magisk module [NfcScreenOff](https://github.com/Magisk-Modules
 ## TODO:
 - Tweak "Tag Scanned" Screen
 - If card has HA payload, use the that id instead
-- Tasker integration
 - Test read wifi network and list available networks.
   - **Optional**: If set, we can do any of the actions based on the location (via wifi availability/connection)
