@@ -17,7 +17,7 @@ Head to [releases](https://github.com/hkfuertes/nfc_ha_tags/releases) to grab th
 ## Pro Tip
 Use this app with Magisk module [NfcScreenOff](https://github.com/Magisk-Modules-Repo/NFCScreenOff) to convert an spare Nfc enabled phone into an RFID reader for Home Assitant.
 
-## TODO:
+## TO DO:
 - Tweak "Tag Scanned" Screen
 - If card has HA payload, use the that id instead
 - Test read wifi network and list available networks.
