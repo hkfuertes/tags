@@ -1,4 +1,5 @@
-# Tags
+![tags](TAGS.png)
+
 Simple proxy app to trigger Home Assistant tag by reusing nfc cards/tags (i.e. Metro card).
 
 ## Usage
@@ -15,12 +16,6 @@ Head to [releases](https://github.com/hkfuertes/nfc_ha_tags/releases) to grab th
 
 ## Pro Tip
 Use this app with Magisk module [NfcScreenOff](https://github.com/Magisk-Modules-Repo/NFCScreenOff) to convert an spare Nfc enabled phone into an RFID reader for Home Assitant.
-
-## Screenshots
-![HomeScreen](images/home_screen.jpg)
-![SelectConnector](images/select_connector.jpg)
-![CreateConnector](images/create_connector.jpg)
-![tagScanned](images/tag_scanned.jpg)
 
 ## TODO:
 - Tweak "Tag Scanned" Screen
